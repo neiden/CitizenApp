@@ -1,12 +1,14 @@
 package com.example.citizen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import android.content.Intent
+import android.app.AlertDialog
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_POST = "post"
@@ -29,6 +31,7 @@ class PostFragment : Fragment() {
     lateinit var opTV: TextView
     lateinit var contentTV: TextView
     lateinit var titleTV: TextView
+    lateinit var scoreTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +52,35 @@ class PostFragment : Fragment() {
         opTV = view.findViewById(R.id.op)
         contentTV = view.findViewById(R.id.content)
         titleTV = view.findViewById(R.id.title)
+        scoreTV = view.findViewById(R.id.score)
 
         opTV.text = post?.op
         contentTV.text = post?.content
         titleTV.text = post?.title
+        scoreTV.text = post?.score.toString()
+
+        replyButton.setOnClickListener {
+            //Log.d("ACTIVITY","$activity")
+            if (activity !is PostActivity) {
+                var intent = Intent(activity, PostActivity::class.java)
+                startActivity(intent)
+                //TODO figure out dialog popup stuff
+            }
+        }
 
         // Upvote button code
         upvoteButton.setOnClickListener {
-            if(downvoted){
+            if (downvoted) {
                 downvoteButton.background = resources.getDrawable(R.drawable.gray_arrow)
                 downvoted = false
+                post?.upvote()
             }
-            upvoteButton.background = resources.getDrawable(R.drawable.orange_arrow)
-            post?.upvote()
-            upvoted = true
+            if (!upvoted){
+                upvoteButton.background = resources.getDrawable(R.drawable.orange_arrow)
+                post?.upvote()
+                upvoted = true
+                scoreTV.text = post?.score?.toString()
+            }
         }
 
         // Downvote button code
@@ -70,10 +88,14 @@ class PostFragment : Fragment() {
             if(upvoted){
                 upvoteButton.background = resources.getDrawable(R.drawable.gray_arrow)
                 upvoted = false
+                post?.downvote()
             }
-            downvoteButton.background = resources.getDrawable(R.drawable.blue_arrow)
-            post?.downvote()
-            downvoted = true
+            if(!downvoted) {
+                downvoteButton.background = resources.getDrawable(R.drawable.blue_arrow)
+                post?.downvote()
+                downvoted = true
+                scoreTV.text = post?.score?.toString()
+            }
         }
 
 

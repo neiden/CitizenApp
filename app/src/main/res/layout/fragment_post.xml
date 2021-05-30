@@ -40,9 +40,10 @@
             android:layout_margin="5dp" />
 
         <TextView
+            android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UPVOTES"
+            android:text="Score"
             android:layout_gravity="center_vertical"/>
 
         <ImageButton
@@ -53,11 +54,7 @@
             android:background="@drawable/gray_arrow"
             android:layout_margin="5dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DOWNVOTES"
-            android:layout_gravity="center_vertical"/>
+
 
         <ImageButton
             android:id="@+id/reply"
