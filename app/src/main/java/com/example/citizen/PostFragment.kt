@@ -6,34 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_POST = "post"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MainCommentFragment.newInstance] factory method to
+ * Use the [PostFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class PostFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    var upvoted: Boolean = false
-    var downvoted: Boolean = false
+    private var post: Post? = null
+
+    private var upvoted: Boolean = false
+    private var downvoted: Boolean = false
 
     lateinit var upvoteButton: ImageButton
     lateinit var downvoteButton: ImageButton
     lateinit var replyButton: ImageButton
+    lateinit var opTV: TextView
+    lateinit var contentTV: TextView
+    lateinit var titleTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            post = it.get(ARG_POST) as Post
         }
     }
 
@@ -46,6 +46,13 @@ class PostFragment : Fragment() {
         upvoteButton = view.findViewById<ImageButton>(R.id.upArrow)
         downvoteButton = view.findViewById<ImageButton>(R.id.downArrow)
         replyButton = view.findViewById<ImageButton>(R.id.reply)
+        opTV = view.findViewById(R.id.op)
+        contentTV = view.findViewById(R.id.content)
+        titleTV = view.findViewById(R.id.title)
+
+        opTV.text = post?.op
+        contentTV.text = post?.content
+        titleTV.text = post?.title
 
         // Upvote button code
         upvoteButton.setOnClickListener {
@@ -54,6 +61,7 @@ class PostFragment : Fragment() {
                 downvoted = false
             }
             upvoteButton.background = resources.getDrawable(R.drawable.orange_arrow)
+            post?.upvote()
             upvoted = true
         }
 
@@ -64,6 +72,7 @@ class PostFragment : Fragment() {
                 upvoted = false
             }
             downvoteButton.background = resources.getDrawable(R.drawable.blue_arrow)
+            post?.downvote()
             downvoted = true
         }
 
@@ -83,11 +92,10 @@ class PostFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(post: Post) =
             PostFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_POST,post)
                 }
             }
     }

@@ -7,18 +7,20 @@
     tools:context=".PostFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="OG POST TITLE" />
 
     <TextView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="OG POST CONTENT" />
 
     <TextView
+        android:id="@+id/op"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="OG USERNAME" />
