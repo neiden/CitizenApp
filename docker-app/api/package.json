@@ -1,0 +1,14 @@
+{
+  "name": "citizen-api",
+  "version": "1.0.0",
+  "description": "A node.je + express api for WWU's CSCI412 final project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harry Saliba",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
