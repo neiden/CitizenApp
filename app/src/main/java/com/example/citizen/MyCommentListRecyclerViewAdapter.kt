@@ -8,13 +8,9 @@ import android.widget.TextView
 
 import com.example.citizen.databinding.FragmentCommentBinding
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class CommentRecyclerViewAdapter(
-    private var values: List<Comment>
-) : RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder>() {
+class MyCommentListRecyclerViewAdapter(
+    private val values: List<Comment>
+) : RecyclerView.Adapter<MyCommentListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -30,7 +26,6 @@ class CommentRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        //holder.idView.text = item.id
         holder.contentView.text = item.content
     }
 
@@ -44,11 +39,6 @@ class CommentRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
-    }
-
-    fun setCommentList(commentList: MutableList<Comment>) {
-        values = commentList
-        notifyDataSetChanged()
     }
 
 }

@@ -14,9 +14,10 @@
         android:name="com.example.citizen.PostFragment"
         tools:layout="@layout/fragment_post" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comments"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.citizen.CommentListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

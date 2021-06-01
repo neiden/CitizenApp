@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.content.Intent
 import android.app.AlertDialog
+import android.util.Log
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_POST = "post"
@@ -60,11 +61,32 @@ class PostFragment : Fragment() {
         scoreTV.text = post?.score.toString()
 
         replyButton.setOnClickListener {
-            //Log.d("ACTIVITY","$activity")
+            //TODO FIX ERROR
             if (activity !is PostActivity) {
+                Log.d("POST","Not in post activity!")
                 var intent = Intent(activity, PostActivity::class.java)
                 startActivity(intent)
                 //TODO figure out dialog popup stuff
+            }
+            var comment: Comment = Comment("duggy","hi :)")
+            post?.addComment(comment)
+            (activity as PostActivity).addComment(comment)
+
+        }
+
+        contentTV.setOnClickListener {
+            if (activity !is PostActivity) {
+                Log.d("POST","Not in post activity!")
+                var intent = Intent(activity, PostActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        titleTV.setOnClickListener {
+            if (activity !is PostActivity) {
+                Log.d("POST","Not in post activity!")
+                var intent = Intent(activity, PostActivity::class.java)
+                startActivity(intent)
             }
         }
 

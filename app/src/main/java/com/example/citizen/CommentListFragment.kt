@@ -1,6 +1,7 @@
 package com.example.citizen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,10 @@ import android.view.ViewGroup
 /**
  * A fragment representing a list of Items.
  */
-class CommentFragment : Fragment() {
+class CommentListFragment : Fragment() {
 
     private var columnCount = 1
+    var comments: MutableList<Comment> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +39,10 @@ class CommentFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = CommentRecyclerViewAdapter(mutableListOf())
+                adapter = MyCommentListRecyclerViewAdapter(comments)
             }
         }
         return view
-    }
-
-    fun setCommentList(cList: MutableList<Comment>) {
-        var adapter = (view as RecyclerView).adapter as CommentRecyclerViewAdapter
-        adapter.setCommentList(cList)
     }
 
     companion object {
@@ -55,11 +52,18 @@ class CommentFragment : Fragment() {
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
-            CommentFragment().apply {
+        fun newInstance() =
+            CommentListFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
+                    //putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    fun addComment(comment: Comment){
+        comments.add(comment)
+        var commentListView = view as RecyclerView
+        var adapter = commentListView.adapter
+        adapter?.notifyDataSetChanged()
     }
 }

@@ -12,7 +12,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var intent = Intent(this, PostActivity::class.java)
-        startActivity(intent)
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.post,PostFragment.newInstance(Post("dougy","this stuff is good","TITLE TEXT","my house")))
+        transaction.addToBackStack(null)
+        transaction.commit()
+        //var intent = Intent(this, PostActivity::class.java)
+        //startActivity(intent)
     }
 }
