@@ -1,0 +1,33 @@
+version: "3"
+services:
+  db:
+    image: postgres:12.2
+    volumes:
+      - $HOME/db2:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=citizen
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=citizen
+      - PGDATA=/var/lib/postgresql/data
+    restart: always
+  api:
+    build: "api/"
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE=citizen
+      - DATABASE_USER=citizen
+      - DATABASE_PASSWORD=password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - PORT=8080
+    restart: always
+networks:
+  backend:
+    driver: bridge
