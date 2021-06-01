@@ -10,7 +10,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 
 import com.example.citizen.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.citizen.databinding.FragmentPostListBinding
+
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].

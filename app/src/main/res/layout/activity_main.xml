@@ -4,31 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-
-<<<<<<< HEAD
-    <Button
-        android:id="@+id/addPost"
-        android:layout_width="133dp"
-        android:layout_height="61dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="28dp"
-        android:text="Create New Post"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="16dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postList"
-        android:layout_width="348dp"
-        android:layout_height="694dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.243"
-        tools:listitem="@layout/fragment_post" />
 
     <!--    <fragment-->
 <!--        android:id="@+id/postList"-->
@@ -37,13 +15,25 @@
 <!--        android:layout_height="match_parent"-->
 <!--        tools:layout_editor_absoluteX="0dp"-->
 <!--        tools:layout_editor_absoluteY="0dp" />-->
-=======
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/post"
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.example.citizen.PostFragment"
-        tools:layout="@layout/fragment_post" />
->>>>>>> cd5a74cce1d62bbd9a65963ff2a82f2e9c396b4b
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintVertical_bias="0.243"
+        tools:listitem="@layout/fragment_post" />
+
+    <Button
+        android:id="@+id/addPost"
+        android:layout_width="133dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginBottom="80dp"
+        android:text="Create New Post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </LinearLayout>
