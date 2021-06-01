@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), PostDialogListener {
         setContentView(R.layout.activity_main)
 
         var postList: RecyclerView = findViewById(R.id.postList)
-        postList.adapter = MyPostRecyclerViewAdapter(POSTLIST)
+        postList.adapter = MyPostRecyclerViewAdapter(POSTLIST, this)
         postList.layoutManager = LinearLayoutManager(this)
 
         POSTLIST.add(Post("John42069", "This is fucked", "Help me", "Seattle, WA"))

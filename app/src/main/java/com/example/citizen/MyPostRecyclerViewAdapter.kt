@@ -1,5 +1,6 @@
 package com.example.citizen
 
+import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,7 +17,8 @@ import com.example.citizen.databinding.FragmentPostListBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyPostRecyclerViewAdapter(
-    private val values: List<Post>
+    private val values: List<Post>,
+    val context: Context
 ) : RecyclerView.Adapter<MyPostRecyclerViewAdapter.ViewHolder>() {
 
 
@@ -34,22 +36,42 @@ class MyPostRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currItem = values[position]
+        var downvoted = false
+        var upvoted = false
         holder.upvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.downvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.replyButton.setImageResource(R.drawable.comment)
         holder.opTV.text = currItem.op
         holder.contentTV.text = currItem.content
         holder.titleTV.text = currItem.title
-        holder.scoreTV.text = "no score"
+        holder.scoreTV.text = currItem.score.toString()
 
         holder.upvoteButton.setOnClickListener{
-            currItem.upvote()
-            Log.d("III", "Post upvoted: ${currItem.title}")
-
+            if (downvoted) {
+                holder.downvoteButton.background = context.resources.getDrawable(R.drawable.gray_arrow)
+                downvoted = false
+                currItem.upvote()
+            }
+            if (!upvoted){
+                holder.upvoteButton.background = context.resources.getDrawable(R.drawable.orange_arrow)
+                currItem.upvote()
+                upvoted = true
+                holder.scoreTV.text = currItem.score.toString()
+            }
         }
 
         holder.downvoteButton.setOnClickListener{
-            currItem.downvote()
+            if(upvoted){
+                holder.upvoteButton.background = context.resources.getDrawable(R.drawable.gray_arrow)
+                upvoted = false
+                currItem.downvote()
+            }
+            if(!downvoted) {
+                holder.downvoteButton.background = context.resources.getDrawable(R.drawable.blue_arrow)
+                currItem.downvote()
+                downvoted = true
+                holder.scoreTV.text = currItem.score.toString()
+            }
             Log.d("III", "Post downvoted: ${currItem.title}")
         }
     }

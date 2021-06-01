@@ -1,5 +1,6 @@
 package com.example.citizen
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -39,7 +40,7 @@ class PostFragmentList : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyPostRecyclerViewAdapter(MainActivity.POSTLIST)
+                adapter = MyPostRecyclerViewAdapter(MainActivity.POSTLIST, MainActivity as Context)
             }
         }
         return view
