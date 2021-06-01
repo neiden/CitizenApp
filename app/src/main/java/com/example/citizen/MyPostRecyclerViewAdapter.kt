@@ -23,9 +23,7 @@ class MyPostRecyclerViewAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.fragment_post, parent, false)
-
         return ViewHolder(itemView)
 
     }
@@ -72,7 +70,6 @@ class MyPostRecyclerViewAdapter(
                 downvoted = true
                 holder.scoreTV.text = currItem.score.toString()
             }
-            Log.d("III", "Post downvoted: ${currItem.title}")
         }
     }
 

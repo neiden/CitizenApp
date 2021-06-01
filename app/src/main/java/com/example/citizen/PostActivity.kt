@@ -6,6 +6,9 @@ import android.content.res.Configuration
 
 class PostActivity : AppCompatActivity() {
 
+    lateinit var post: PostFragment
+    lateinit var comments: CommentListFragment
+
     companion object {
         var COMMENTLIST: MutableList<Comment> = mutableListOf()
     }
@@ -14,23 +17,23 @@ class PostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
 
+        post = PostFragment.newInstance(Post("dougy","this stuff is good","TITLE TEXT","my house"))
+        comments = CommentListFragment.newInstance()
+
         //var fragment = supportFragmentManager.findFragmentById(R.id.post) as PostFragment
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.post,PostFragment.newInstance(Post("dougy","this stuff is good","TITLE TEXT","my house")))
-        transaction.addToBackStack(null)
+        transaction.replace(R.id.post,post)
+        //transaction.addToBackStack(null)
+        transaction.replace(R.id.fragmentContainerView,CommentListFragment.newInstance())
         transaction.commit()
 
 
     }
 
-    //private fun modifyLayout(config: Configuration) {
-      //  if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
-        //    setContentView(R.layout.activity_main)
-        //} else {
-          //  setContentView(R.layout.activity_main_land)
-        //}
-    //}
-
+    fun addComment(comment: Comment){
+        COMMENTLIST.add(comment)
+        comments.addComment(comment)
+    }
 
 }

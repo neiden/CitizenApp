@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), PostDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         var postList: RecyclerView = findViewById(R.id.postList)
         postList.adapter = MyPostRecyclerViewAdapter(POSTLIST, this)
         postList.layoutManager = LinearLayoutManager(this)
@@ -45,6 +46,13 @@ class MainActivity : AppCompatActivity(), PostDialogListener {
             var postDialogFrag = CreatePostDialogFragment()
             postDialogFrag.show(supportFragmentManager, "fragment_create_post_dialog")
         }
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.post,PostFragment.newInstance(Post("dougy","this stuff is good","TITLE TEXT","my house")))
+        transaction.addToBackStack(null)
+        transaction.commit()
+        //var intent = Intent(this, PostActivity::class.java)
+        //startActivity(intent)
     }
 
 
