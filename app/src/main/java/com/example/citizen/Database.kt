@@ -20,6 +20,6 @@ class Database {
     }
 
     fun getPost(id: Int): Post {
-        return Post(id, "This is a post called by id.", "This is the body of a post that is called by its unique databse id.", 0, 0F, 0F)
+        return Post(id, "This is a post called by id.", "This is the body of a post that is called by its unique database id.", 0, 0F, 0F)
     }
 }
