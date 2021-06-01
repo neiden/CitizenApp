@@ -1,4 +1,6 @@
-import Sequelize from 'sequelize';
+import pkg from 'sequelize';
+
+const { Sequelize, DataTypes } = pkg;
 
 const sequelize = new Sequelize(
   process.env.DATABASE,
@@ -44,9 +46,13 @@ const models = {
   })
 };
 
-models.Comment.associate = (models) => {
-  Comment.belongsTo(models.User);
-  Comment.belongsTo(models.Post);
-};
+models.Comment.belongsTo(models.User);
+models.Comment.belongsTo(models.Post);
+models.Comment.belongsToMany(models.User, { through: 'commentUpvotes' } );
+models.Comment.belongsToMany(models.User, { through: 'commentDownvotes' } );
 
-module.exports = { sequelize, models }
+models.Post.belongsTo(models.User);
+models.Post.belongsTo(models.User, { through: 'postUpvotes' } );
+models.Post.belongsTo(models.User, { through: 'postDownvotes' } );
+
+export { sequelize, models }

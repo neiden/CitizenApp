@@ -1,8 +1,12 @@
+import { routes } from './routes/index.js';
+import express from 'express';
+import createError from 'http-errors';
+
 const app = express();
 app.use(express.json());
-app.use('/comment', routes.comment);
-app.use('/post', routes.post);
-app.use('/user', routes.user);
+app.use('/comment', routes.Comment);
+app.use('/post', routes.Post);
+app.use('/user', routes.User);
 
 app.use((err, req, next) => {
   next(createError(404));
@@ -19,4 +23,4 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-module.exports = { app }
+export { app }

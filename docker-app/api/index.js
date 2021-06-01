@@ -2,9 +2,9 @@ import express from 'express';
 import http from 'http';
 import { normalize } from 'path';
 
-import app from './app'
-import { models, sequelize } from './models';
-import routes from './routes';
+import { app } from './app.js'
+import { sequelize } from './models.js';
+import { routes } from './routes/index.js';
 
 /* get port */
 const port = normalizePort(process.env.PORT);
