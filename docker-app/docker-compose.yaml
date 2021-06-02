@@ -15,7 +15,7 @@ services:
       - PGDATA=/var/lib/postgresql/data
     restart: always
   api:
-    build: "api/"
+    build: ./api
     networks:
       - backend
     ports:
@@ -27,6 +27,7 @@ services:
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
       - PORT=8080
+      - API_SECRET=seemong
     restart: always
 networks:
   backend:
