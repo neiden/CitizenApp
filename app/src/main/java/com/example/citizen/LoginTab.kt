@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.citizen.models.User
 
 class LoginTab : Fragment() {
 
@@ -41,18 +42,31 @@ class LoginTab : Fragment() {
             Log.d("DEBUG",passString)
             Log.d("DEBUG","BUTTON PRESS")
 
-            if(usernameString.isEmpty() || passString.isEmpty()){
+            val database: Database = Database()
+            val user: User = User(0,usernameString,passString,"","")
+            val userResponse: User  = database.login(user)
+
+
+            //Im checking if the user response is valid in the if statement below
+            //Obviously userResponse.id == 1 is not the correct check; Just a placeholder
+            if((usernameString.isEmpty() || passString.isEmpty()) || userResponse.id == 1){
                 Toast.makeText(activity,"Enter Valid Login Credentials",Toast.LENGTH_LONG).show()
             }else{
 //                val intent = Intent(activity, SecondActivity::class.java)
 //                intent.putExtra("email",usernameString)
 //                intent.putExtra("pass",passString)
+
+    //                Get user information from database
+
+
+
                 val intent = Intent(activity, FeedActivity::class.java)
+
                 startActivity(intent)
                 activity?.finish()
             }
 
-            //NEED TO CHECK IF LOGIN IS IN DATABASE
+
 
 
 

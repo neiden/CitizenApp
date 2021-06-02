@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.citizen.models.User
 
 class SignUpTab : Fragment() {
     override fun onCreateView(
@@ -53,11 +54,15 @@ class SignUpTab : Fragment() {
             val passString = pass.text.toString()
             val nameString = name.text.toString()
             var BadgeNumString = ""
+            val user: User = User(0,usernameString,passString,"","")
 
             if(currString == "Government Official"){
                 BadgeNumString = badgeNum.text.toString()
+                user.role = "Government Official"
+
             }else{
                 BadgeNumString = "N/A"
+                user.role = "Civilian"
             }
 
             if(usernameString.isEmpty() || passString.isEmpty() || nameString.isEmpty()){
@@ -68,13 +73,14 @@ class SignUpTab : Fragment() {
 //                intent.putExtra("pass",passString)
 //                intent.putExtra("name", nameString)
 //                intent.putExtra("badge",BadgeNumString)
+
+                val database: Database = Database()
+                database.login(user)
+
                 val intent = Intent(activity, FeedActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
             }
-
-
-
 
         }
 
