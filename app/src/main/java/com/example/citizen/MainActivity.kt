@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setUpTabs(){
         val adapter = LoginAdapter(supportFragmentManager)
-        adapter.addFragment(LoginTab(),"Login")
+        adapter.addFragment(LoginTab(this),"Login")
         adapter.addFragment(SignUpTab(),"SignUp")
         val viewPager: ViewPager = findViewById(R.id.viewPager)
         viewPager.adapter = adapter

@@ -18,6 +18,7 @@ user.post('/login', (req, res) => {
     query.where.password = req.body.password;
   }
   else {
+    console.error("Error in body: " + req.body);
     return res.status(400).json({ message: 'Bad Request' });
   }
   /* Execute query */
@@ -29,6 +30,7 @@ user.post('/login', (req, res) => {
         return res.status(200).json(user);
       }
       else {
+        console.error("Error in sql");
         return res.status(400).json({ message: 'Bad Request' });
       }
     })

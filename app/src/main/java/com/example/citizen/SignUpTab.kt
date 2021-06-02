@@ -74,7 +74,7 @@ class SignUpTab : Fragment() {
 //                intent.putExtra("name", nameString)
 //                intent.putExtra("badge",BadgeNumString)
 
-                val database: Database = Database()
+                val database: Database = Database(MainActivity())
                 database.login(user)
 
                 val intent = Intent(activity, FeedActivity::class.java)

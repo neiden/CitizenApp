@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import android.content.Intent
 import android.app.AlertDialog
 import android.util.Log
+import com.example.citizen.models.Comment
+import com.example.citizen.models.Post
+import com.example.citizen.models.User
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_POST = "post"
@@ -55,10 +58,10 @@ class PostFragment : Fragment() {
         titleTV = view.findViewById(R.id.title)
         scoreTV = view.findViewById(R.id.score)
 
-        opTV.text = post?.op
-        contentTV.text = post?.content
+        opTV.text = post?.user?.username
+        contentTV.text = post?.body
         titleTV.text = post?.title
-        scoreTV.text = post?.score.toString()
+        scoreTV.text = "3"
 
         replyButton.setOnClickListener {
             //TODO FIX ERROR
@@ -68,8 +71,9 @@ class PostFragment : Fragment() {
                 startActivity(intent)
                 //TODO figure out dialog popup stuff
             }
-            var comment: Comment = Comment("duggy","hi :)")
-            post?.addComment(comment)
+//            var comment = Comment("duggy","hi :)")
+            var comment = Comment(0, 0, User(0, "Duggy", null, "role", null), 0, "hi", 0, 0)
+            post?.comments?.add(comment)
             (activity as PostActivity).addComment(comment)
 
         }
@@ -95,13 +99,13 @@ class PostFragment : Fragment() {
             if (downvoted) {
                 downvoteButton.background = resources.getDrawable(R.drawable.gray_arrow)
                 downvoted = false
-                post?.upvote()
+                post?.upvotes = 3
             }
             if (!upvoted){
                 upvoteButton.background = resources.getDrawable(R.drawable.orange_arrow)
-                post?.upvote()
+                post?.upvotes = 3
                 upvoted = true
-                scoreTV.text = post?.score?.toString()
+                scoreTV.text = "3"
             }
         }
 
@@ -110,13 +114,13 @@ class PostFragment : Fragment() {
             if(upvoted){
                 upvoteButton.background = resources.getDrawable(R.drawable.gray_arrow)
                 upvoted = false
-                post?.downvote()
+                post?.downvotes = 3
             }
             if(!downvoted) {
                 downvoteButton.background = resources.getDrawable(R.drawable.blue_arrow)
-                post?.downvote()
+                post?.downvotes = 3
                 downvoted = true
-                scoreTV.text = post?.score?.toString()
+                scoreTV.text = "3"
             }
         }
 
@@ -136,10 +140,10 @@ class PostFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(post: Post) =
+        fun newInstance(n: Int) =
             PostFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(ARG_POST,post)
+                    putInt(ARG_POST,n)
                 }
             }
     }

@@ -8,6 +8,8 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.citizen.*
+import com.example.citizen.models.Post
+import com.example.citizen.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FeedActivity : AppCompatActivity(), PostDialogListener {
@@ -25,7 +27,7 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         var title = dataArray[2]
         var description = dataArray[1]
         var location = dataArray[3]
-        POSTLIST.add(Post("$op", "$description", "$title", "$location"))
+        POSTLIST.add(Post(postNumber, "$title", "$description", User(0, "username", null, "role", null), null, 0F, 0F, 0, 0))
         postList.adapter?.notifyDataSetChanged()
         postNumber++
     }
@@ -46,7 +48,8 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         postList.adapter = MyPostRecyclerViewAdapter(POSTLIST, this)
         postList.layoutManager = LinearLayoutManager(this)
 
-        POSTLIST.add(Post("John42069", "This is fucked", "Help me", "Seattle, WA"))
+//        POSTLIST.add(Post("John42069", "This is fucked", "Help me", "Seattle, WA"))
+        POSTLIST.add(Post(postNumber, "This is fucked", "help me", User(0, "John", null, "role", null), null,0F, 0F, 0, 0))
         postList.adapter?.notifyDataSetChanged()
         postNumber++
 

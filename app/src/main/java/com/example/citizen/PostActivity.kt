@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.citizen.models.Comment
+import com.example.citizen.models.Post
+import com.example.citizen.models.User
 
 class PostActivity : AppCompatActivity(), CommentDialogListener {
 
@@ -27,7 +30,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         var dataArray = data.split(",").toTypedArray()
         var op = dataArray[0]
         var content = dataArray[1]
-        COMMENTLIST.add(Comment("$op", "$content"))
+        COMMENTLIST.add(Comment(0, 0, User(0, "harry", null, "role", null), 0, "$content", 0, 0))
         commentList.adapter?.notifyDataSetChanged()
     }
 
@@ -35,24 +38,27 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
         var commentList: RecyclerView = findViewById(R.id.commentList)
-        var incomingPost: Post ?= intent.getParcelableExtra<Post>("POST")
+//        var incomingPost: Int? = intent.getIntExtra("POST")
 
 
         commentList.adapter = MyCommentListRecyclerViewAdapter(COMMENTLIST)
         commentList.layoutManager = LinearLayoutManager(this)
 
         postOp = findViewById(R.id.postOp)
-        postOp.text = "by ".plus(incomingPost?.op)
+//        postOp.text = "by ".plus(incomingPost?.user?.username)
         title = findViewById(R.id.postTitle)
-        title.text = incomingPost?.title
+//        title.text = incomingPost?.title
         content = findViewById(R.id.postContent)
-        content.text = incomingPost?.content
+//        content.text = incomingPost?.body
         commentButton = findViewById(R.id.commentButton)
 
         comments = CommentListFragment.newInstance()
-        COMMENTLIST.add(Comment("John", "I am the greatest of all time"))
-        COMMENTLIST.add(Comment("xXslay3r69Xx", "Doug's an alright guy"))
-        COMMENTLIST.add(Comment("Don", "That's definitely good stuff"))
+//        COMMENTLIST.add(Comment("John", "I am the greatest of all time"))
+//        COMMENTLIST.add(Comment("xXslay3r69Xx", "Doug's an alright guy"))
+//        COMMENTLIST.add(Comment("Don", "That's definitely good stuff"))
+        COMMENTLIST.add(Comment(0, 0, User(0, "xXslay3r69Xx", null, "role", null), 0, "I am the greatest of all time", 0, 0))
+        COMMENTLIST.add(Comment(0, 0, User(0, "John", null, "role", null), 0, "Doug's an alright guy", 0, 0))
+        COMMENTLIST.add(Comment(0, 0, User(0, "Don", null, "role", null), 0, "That's definitely good stuff", 0, 0))
 
         Log.d("EEE", "${COMMENTLIST.toString()}")
         commentList.adapter?.notifyDataSetChanged()

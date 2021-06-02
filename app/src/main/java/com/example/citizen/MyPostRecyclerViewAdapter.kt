@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.citizen.models.Post
 
 import com.example.citizen.placeholder.PlaceholderContent.PlaceholderItem
 
@@ -40,17 +41,17 @@ class MyPostRecyclerViewAdapter(
         holder.upvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.downvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.replyButton.setImageResource(R.drawable.comment)
-        holder.opTV.text = currItem.op
-        holder.contentTV.text = currItem.content
+        holder.opTV.text = currItem.user.username
+        holder.contentTV.text = currItem.body
         holder.titleTV.text = currItem.title
-        holder.scoreTV.text = currItem.score.toString()
+        holder.scoreTV.text = (currItem.upvotes - currItem.downvotes).toString()
 
         holder.replyButton.setOnClickListener{
                 Log.d("POST","Clicked on reply")
                 var intent = Intent(context, PostActivity::class.java)
 
                 with (intent){
-                    putExtra("POST", currItem)
+                    putExtra("POST", currItem.id)
                 }
 
                 context.startActivity(intent)
@@ -60,13 +61,13 @@ class MyPostRecyclerViewAdapter(
             if (downvoted) {
                 holder.downvoteButton.background = context.resources.getDrawable(R.drawable.gray_arrow)
                 downvoted = false
-                currItem.upvote()
+                currItem.upvotes++
             }
             if (!upvoted){
                 holder.upvoteButton.background = context.resources.getDrawable(R.drawable.orange_arrow)
-                currItem.upvote()
+                currItem.upvotes++
                 upvoted = true
-                holder.scoreTV.text = currItem.score.toString()
+                holder.scoreTV.text = (currItem.upvotes - currItem.downvotes).toString()
             }
         }
 
@@ -74,13 +75,13 @@ class MyPostRecyclerViewAdapter(
             if(upvoted){
                 holder.upvoteButton.background = context.resources.getDrawable(R.drawable.gray_arrow)
                 upvoted = false
-                currItem.downvote()
+                currItem.downvotes++
             }
             if(!downvoted) {
                 holder.downvoteButton.background = context.resources.getDrawable(R.drawable.blue_arrow)
-                currItem.downvote()
+                currItem.downvotes++
                 downvoted = true
-                holder.scoreTV.text = currItem.score.toString()
+                holder.scoreTV.text = (currItem.upvotes - currItem.downvotes).toString()
             }
         }
     }

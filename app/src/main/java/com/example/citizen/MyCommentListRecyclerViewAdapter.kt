@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.citizen.models.Comment
 
 
 class MyCommentListRecyclerViewAdapter(
@@ -20,8 +21,8 @@ class MyCommentListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.commentContent.text = item.content
-        holder.commentOp.text = item.op
+        holder.commentContent.text = item.body
+        holder.commentOp.text = item.user.username
     }
 
     override fun getItemCount(): Int = values.size
