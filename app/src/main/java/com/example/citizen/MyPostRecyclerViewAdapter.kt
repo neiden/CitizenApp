@@ -1,6 +1,7 @@
 package com.example.citizen
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -43,6 +44,17 @@ class MyPostRecyclerViewAdapter(
         holder.contentTV.text = currItem.content
         holder.titleTV.text = currItem.title
         holder.scoreTV.text = currItem.score.toString()
+
+        holder.replyButton.setOnClickListener{
+                Log.d("POST","Clicked on reply")
+                var intent = Intent(context, PostActivity::class.java)
+
+                with (intent){
+                    putExtra("POST", currItem)
+                }
+
+                context.startActivity(intent)
+        }
 
         holder.upvoteButton.setOnClickListener{
             if (downvoted) {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateCommentDialogFragment">
+
+
+    <TextView
+        android:layout_width="122dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="130dp"
+        android:text="Create Comment" />
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="131dp"
+        android:inputType="text"
+        android:hint="Comment"
+        android:layout_marginTop="150dp"
+        android:id="@+id/comment"
+        />
+
+    <Button
+        android:layout_width="133dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="600dp"
+        android:text="Submit"
+        android:id="@+id/commentSubmitButton"/>
+
+</FrameLayout>

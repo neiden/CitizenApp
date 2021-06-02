@@ -5,19 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PostActivity"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/post"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.example.citizen.PostFragment"
-        tools:layout="@layout/fragment_post" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.citizen.CommentListFragment"
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/post"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:name="com.example.citizen.PostFragment"-->
+<!--        tools:layout="@layout/fragment_post" />-->
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:text="title"
+        android:id="@+id/postTitle"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="content"
+        android:id="@+id/postContent"
+        />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentList"
+        android:layout_width="255dp"
+        android:layout_height="343dp"
+        tools:listitem="@layout/fragment_post_layout" />
+
+    <Button
+        android:id="@+id/commentButton"
+        android:layout_width="133dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="20dp"
+        android:text="Comment" />
+
 
 </LinearLayout>
