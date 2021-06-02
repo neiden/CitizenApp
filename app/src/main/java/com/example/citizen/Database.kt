@@ -5,7 +5,7 @@ import com.example.citizen.models.User
 
 class Database {
     companion object {
-        var TOKEN: string? = null;
+        var TOKEN: String? = null;
     }
     fun login(user: User): User {
         user.token = "test token"
