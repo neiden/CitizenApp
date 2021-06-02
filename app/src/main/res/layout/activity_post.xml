@@ -16,21 +16,32 @@
 <!--        android:name="com.example.citizen.PostFragment"-->
 <!--        tools:layout="@layout/fragment_post" />-->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
-        android:text="title"
-        android:id="@+id/postTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title:"
+        android:textStyle="bold"
         />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="content"
-        android:id="@+id/postContent"
+        android:id="@+id/postTitle"
+        android:layout_width="359dp"
+        android:layout_height="77dp"
+        android:layout_marginLeft="20dp"
+        android:text="title" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Content:"
+        android:textStyle="bold"
         />
 
 
+    <TextView
+        android:id="@+id/postContent"
+        android:layout_width="369dp"
+        android:layout_height="73dp"
+        android:layout_marginLeft="20dp"
+        android:text="content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentList"

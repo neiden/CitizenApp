@@ -45,7 +45,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         content = findViewById(R.id.postContent)
         content.text = incomingPost?.content
         commentButton = findViewById(R.id.commentButton)
-        
+
         comments = CommentListFragment.newInstance()
         COMMENTLIST.add(Comment("John", "I am the greatest of all time"))
         COMMENTLIST.add(Comment("xXslay3r69Xx", "Doug's an alright guy"))
