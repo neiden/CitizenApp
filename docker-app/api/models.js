@@ -14,12 +14,12 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-  Comment: sequelize.define('comment', {
+  Comment: sequelize.define('Comment', {
     body: {
       type: DataTypes.STRING
     }
   }),
-  Post: sequelize.define('post', {
+  Post: sequelize.define('Post', {
     title: {
       type: DataTypes.STRING
     },
@@ -33,26 +33,45 @@ const models = {
       type: DataTypes.FLOAT
     },
   }),
-  User: sequelize.define('user', {
+  User: sequelize.define('User', {
     username: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     role: {
       type: DataTypes.FLOAT
     }
-  })
-};
+  },
+  {
+    defaultScope: {
+      attributes: { exclude: ['password'] }
+    }
+  }),
+  PostUpvotes: sequelize.define('PostUpvotes', {}),
+  PostDownvotes: sequelize.define('PostDownvotes', {}),
+  CommentUpvotes: sequelize.define('CommentUpvotes', {}),
+  CommentDownvotes: sequelize.define('CommentDownvotes', {})
+}
 
 models.Comment.belongsTo(models.User);
 models.Comment.belongsTo(models.Post);
-models.Comment.belongsToMany(models.User, { through: 'commentUpvotes' } );
-models.Comment.belongsToMany(models.User, { through: 'commentDownvotes' } );
+models.Comment.belongsToMany(models.User, { through: models.CommentUpvotes } );
+models.Comment.belongsToMany(models.User, { through: models.CommentDownvotes } );
 
 models.Post.belongsTo(models.User);
-models.Post.belongsTo(models.User, { through: 'postUpvotes' } );
-models.Post.belongsTo(models.User, { through: 'postDownvotes' } );
+models.Post.belongsToMany(models.User, { through: models.PostUpvotes } );
+models.Post.belongsToMany(models.User, { through: models.PostDownvotes } );
+
+models.User.hasMany(models.Post);
+models.User.hasMany(models.Comment);
+models.User.belongsToMany(models.Post, { through: models.PostUpvotes } );
+models.User.belongsToMany(models.Post, { through: models.PostDownvotes } );
+models.User.belongsToMany(models.Comment, { through: models.CommentUpvotes } );
+models.User.belongsToMany(models.Comment, { through: models.CommentDownvotes } );
 
 export { sequelize, models }
