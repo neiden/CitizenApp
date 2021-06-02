@@ -10,10 +10,37 @@ post.get('/', authorize, (req, res) => {
     include: [
       {
         model: models.User
+      }
+    ]
+  }
+  models.Post.findAll(query)
+    .then((posts) => {
+      
+      return res.status(200).json(posts);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(400).json({ message: 'Bad Request' });
+    });
+});
+
+/* get a post by id */
+post.get('/:id', authorize, (req, res) => {
+  const query = {
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {
+        model: models.User
       },
       {
-        model: models.User,
-        association: models.PostDownvotes
+        model: models.Comment,
+        include: [
+          {
+            model: models.User
+          }
+        ]
       }
     ]
   }

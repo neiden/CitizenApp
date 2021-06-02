@@ -64,6 +64,7 @@ models.Comment.belongsToMany(models.User, { through: models.CommentUpvotes } );
 models.Comment.belongsToMany(models.User, { through: models.CommentDownvotes } );
 
 models.Post.belongsTo(models.User);
+models.Post.hasMany(models.Comment);
 models.Post.belongsToMany(models.User, { through: models.PostUpvotes } );
 models.Post.belongsToMany(models.User, { through: models.PostDownvotes } );
 
