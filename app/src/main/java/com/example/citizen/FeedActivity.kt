@@ -34,6 +34,12 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
 
+        var db: Database = Database(this)
+
+        db.getPost()
+
+
+
 
         var postList: RecyclerView = findViewById(R.id.postList)
         val bar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
