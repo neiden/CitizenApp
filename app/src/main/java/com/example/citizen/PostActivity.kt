@@ -15,6 +15,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
     lateinit var comments: CommentListFragment
     lateinit var title: TextView
     lateinit var content: TextView
+    lateinit var postOp: TextView
     lateinit var commentButton: Button
 
     companion object {
@@ -40,6 +41,8 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         commentList.adapter = MyCommentListRecyclerViewAdapter(COMMENTLIST)
         commentList.layoutManager = LinearLayoutManager(this)
 
+        postOp = findViewById(R.id.postOp)
+        postOp.text = "by ".plus(incomingPost?.op)
         title = findViewById(R.id.postTitle)
         title.text = incomingPost?.title
         content = findViewById(R.id.postContent)

@@ -40,7 +40,7 @@ class PostFragmentList : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyPostRecyclerViewAdapter(MainActivity.POSTLIST, MainActivity as Context)
+                adapter = MyPostRecyclerViewAdapter(FeedActivity.POSTLIST, FeedActivity as Context)
             }
         }
         return view

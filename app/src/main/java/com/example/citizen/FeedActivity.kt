@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.citizen.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FeedActivity : AppCompatActivity(), PostDialogListener {
     lateinit var newPostButton: Button
@@ -35,6 +36,7 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
 
 
         var postList: RecyclerView = findViewById(R.id.postList)
+        val bar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         postList.adapter = MyPostRecyclerViewAdapter(POSTLIST, this)
         postList.layoutManager = LinearLayoutManager(this)
 
@@ -46,6 +48,15 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         newPostButton.setOnClickListener{
             var postDialogFrag = CreatePostDialogFragment()
             postDialogFrag.show(supportFragmentManager, "fragment_create_post_dialog")
+        }
+
+        bar.setOnNavigationItemSelectedListener {
+            when(it.itemId){    //TODO Put API calls to get specific feeds
+                R.id.home->Log.d("NAVBAR","HOME")
+                R.id.world->Log.d("NAVBAR","ZA WORLDO")
+                R.id.personal->Log.d("NAVBAR","ME MYSELF AND I")
+            }
+            true
         }
 
 
