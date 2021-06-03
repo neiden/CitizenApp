@@ -44,7 +44,7 @@ post.get('/:id', authorize, (req, res) => {
       }
     ]
   }
-  models.Post.findAll(query)
+  models.Post.findOne(query)
     .then((posts) => {
       
       return res.status(200).json(posts);

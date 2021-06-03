@@ -129,7 +129,26 @@ class Database(val context: Context) {
                     latitude = response.getDouble("lat")
                 }
                 var l = mutableListOf<Comment>()
-                var comments = response.getJSONObject("Comments")
+                var comments = response.getJSONArray("Comments")
+                for (i in 0 until comments.length()) {
+                    var item = comments.getJSONObject(i)
+                    var itemUser = item.getJSONObject("User")
+                    l.add(Comment(
+                        item.getInt("id"),
+                        item.getInt("PostId"),
+                        User(
+                            itemUser.getInt("id"),
+                            itemUser.getString("username"),
+                            null,
+                            itemUser.getString("role"),
+                            null
+                        ),
+                        0,
+                        item.getString("body"),
+                        0,
+                        0
+                    ))
+                }
                 var post = Post(
                     response.getInt("id"),
                     response.getString("title"),
@@ -159,6 +178,96 @@ class Database(val context: Context) {
                 return headers
             }
         }
+        queue.add(req)
+    }
+
+    fun postPost(post: Post, next: (Post?) -> Unit) {
+        var body = JSONObject("{\"title\":\"${post.title}\",\"body\":\"${post.body}\"}")
+        val req = JsonObjectRequest(Request.Method.POST, "$endpoint/post", body,
+            { response ->
+                Log.d("DB", "Returned: ${response.toString()}")
+                val user = response.getJSONObject("User")
+                var longitude = 0.0
+                var latitude = 0.0
+                if (!response.isNull("long")) {
+                    longitude = response.getDouble("long")
+                }
+                if (!response.isNull("lat")) {
+                    latitude = response.getDouble("lat")
+                }
+                var l = mutableListOf<Comment>()
+                var comments = response.getJSONArray("Comments")
+                for (i in 0 until comments.length()) {
+                    var item = comments.getJSONObject(i)
+                    var itemUser = item.getJSONObject("User")
+                    l.add(Comment(
+                        item.getInt("id"),
+                        item.getInt("PostId"),
+                        User(
+                            itemUser.getInt("id"),
+                            itemUser.getString("username"),
+                            null,
+                            itemUser.getString("role"),
+                            null
+                        ),
+                        0,
+                        item.getString("body"),
+                        0,
+                        0
+                    ))
+                }
+                var post = Post(
+                    response.getInt("id"),
+                    response.getString("title"),
+                    response.getString("body"),
+                    User(
+                        user.getInt("id"),
+                        user.getString("username"),
+                        null,
+                        user.getString("role"),
+                        null),
+                    null,
+                    longitude,
+                    latitude,
+                    0,
+                    0)
+                next(post)
+            },
+            { error ->
+                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
+                next(null)
+                // error
+            })
+        queue.add(req)
+    }
+
+    fun postComment(comment: Comment, postId: Int, next: (Comment?) -> Unit) {
+        var body = JSONObject("{\"body\":\"${comment.body}\"}")
+        val req = JsonObjectRequest(Request.Method.POST, "$endpoint/comment/${postId}", body,
+            { response ->
+                Log.d("DB", "Returned: ${response.toString()}")
+                var itemUser = response.getJSONObject("User")
+                next(Comment(
+                    response.getInt("id"),
+                    response.getInt("PostId"),
+                    User(
+                        itemUser.getInt("id"),
+                        itemUser.getString("username"),
+                        null,
+                        itemUser.getString("role"),
+                        null
+                    ),
+                    0,
+                    response.getString("body"),
+                    0,
+                    0
+                ))
+            },
+            { error ->
+                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
+                next(null)
+                // error
+            })
         queue.add(req)
     }
 }

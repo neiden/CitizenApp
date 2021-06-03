@@ -88,7 +88,6 @@ class MyPostRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-
     inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var upvoteButton: ImageButton = itemView.findViewById(R.id.upArrow)
