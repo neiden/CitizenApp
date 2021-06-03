@@ -41,7 +41,7 @@ class MyPostRecyclerViewAdapter(
         holder.upvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.downvoteButton.setImageResource(R.drawable.gray_arrow)
         holder.replyButton.setImageResource(R.drawable.comment)
-        holder.opTV.text = currItem.user.username
+        holder.opTV.text = currItem.user?.username
         holder.contentTV.text = currItem.body
         holder.titleTV.text = currItem.title
         holder.scoreTV.text = (currItem.upvotes - currItem.downvotes).toString()
