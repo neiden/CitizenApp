@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.citizen.*
+import com.example.citizen.models.Comment
 import com.example.citizen.models.Post
 import com.example.citizen.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,6 +60,9 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
 //        db.postPost(Post(null, "This is a post made by the app.", "This is the body of the post.", null, null, 0.0, 0.0, 0, 0)) {
 //            Log.d("DEBUG", "MADE A POST: ${it.toString()}")
 //        }
+        db.postComment(Comment(0, 0, null, 0, "This is a comment", 0, 0), 8) {
+            Log.d("DEBUG", "COMMENT BE LIKE: ${it.toString()}")
+        }
 
         newPostButton = findViewById(R.id.addPost)
         newPostButton.setOnClickListener{
