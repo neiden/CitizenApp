@@ -22,7 +22,7 @@ class MyCommentListRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.commentContent.text = item.body
-        holder.commentOp.text = item.user.username
+        holder.commentOp.text = item.user?harry .username
     }
 
     override fun getItemCount(): Int = values.size

@@ -36,7 +36,7 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
 
-        var db: Database = Database(this)
+        var db: Database = Database.getInstance(this)
 
         var postList: RecyclerView = findViewById(R.id.postList)
         val bar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -52,6 +52,10 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
                 postList.adapter?.notifyDataSetChanged()
                 Log.d("DEBUG", "POSTLIST: ${FeedActivity.POSTLIST.toString()}")
             }
+        }
+
+        db.postPost(Post(null, "This is a post made by the app.", "This is the body of the post.", null, null, 0.0, 0.0, 0, 0)) {
+            Log.d("DEBUG", "MADE A POST: ${it.toString()}")
         }
 
         newPostButton = findViewById(R.id.addPost)
