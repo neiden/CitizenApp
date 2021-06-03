@@ -20,6 +20,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
     lateinit var content: TextView
     lateinit var postOp: TextView
     lateinit var commentButton: Button
+
     var db: Database = Database.getInstance(this)
 
     companion object {
@@ -31,7 +32,13 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         var dataArray = data.split(",").toTypedArray()
         var op = dataArray[0]
         var content = dataArray[1]
-        COMMENTLIST.add(Comment(0, 0, User(0, "harry", null, "role", null), 0, "$content", 0, 0))
+        db.postComment(Comment(0, 0, null, 0, "$content", 0, 0), 8) {
+            if(it != null) {
+                COMMENTLIST.add(it)
+                commentList.adapter?.notifyDataSetChanged()
+            }
+        }
+        //COMMENTLIST.add(Comment(0, 0, User(0, "harry", null, "role", null), 0, "$content", 0, 0))
         commentList.adapter?.notifyDataSetChanged()
     }
 
@@ -40,6 +47,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         setContentView(R.layout.activity_post)
         var commentList: RecyclerView = findViewById(R.id.commentList)
         var postId: Int = intent.getIntExtra("POST", 0)
+        COMMENTLIST = mutableListOf()
         Log.d("PostID", "$postId")
 
 
