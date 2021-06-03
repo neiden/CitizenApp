@@ -6,7 +6,14 @@ import authorize from '../helpers/authorize.js';
 const user = express.Router();
 
 user.get('/', authorize, (req, res) => {
-  return res.status(200).json({ "Message" : "OK" });
+  models.User.findAll()
+    .then((users) => {
+      return res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(400).json({ message: 'Bad Request' });
+    });
 });
 
 /* Login */

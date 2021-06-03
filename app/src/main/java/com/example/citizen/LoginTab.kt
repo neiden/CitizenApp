@@ -29,7 +29,7 @@ class LoginTab(var main: Context) : Fragment() {
         val view: View = inflater.inflate(R.layout.login_fragment,container,false)
 
 
-        val username :EditText = view.findViewById(R.id.logUsername)
+        val username: EditText = view.findViewById(R.id.logUsername)
         val pass: EditText = view.findViewById(R.id.logPass)
 
 
