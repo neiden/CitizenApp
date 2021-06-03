@@ -33,7 +33,7 @@ class LoginTab(var main: Context) : Fragment() {
         val pass: EditText = view.findViewById(R.id.logPass)
 
 
-        val btnLogin :Button = view.findViewById(R.id.buttonLogin)
+        val btnLogin: Button = view.findViewById(R.id.buttonLogin)
         btnLogin.setOnClickListener{
 
             val usernameString = username.text.toString()

@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.Volley
+import com.example.citizen.models.Comment
 import com.example.citizen.models.Post
 import com.example.citizen.models.User
 import org.json.JSONObject
@@ -23,7 +24,6 @@ class Database(val context: Context) {
 
     fun login(user: User, next: (User?) -> Unit) {
         var body = JSONObject("{\"username\":\"${user.username}\",\"password\":\"${user.password}\"}")
-        Log.d("DB", "{\"username\":\"${user.username}\",\"password\":\"${user.password}\"}")
         val req = JsonObjectRequest(Request.Method.POST, "$endpoint/user/login", body,
             { response ->
                 Log.d("DB", "Returned: ${response.toString()}")
@@ -44,35 +44,29 @@ class Database(val context: Context) {
         queue.add(req)
     }
 
-//    fun getUser(id: Int): User {
-//        var ret: Array<Post>? = null;
-//        val req = object: JsonArrayRequest(Request.Method.GET, "$endpoint/user/${id}", null,
-//            { response ->
-//                Log.d("DB", "Returned: ${response.toString()}")
-//                for (i in 0 until response.length()) {
-//                    val item = response.getJSONObject(i)
-//                    Log.d("DB", "${item.getString("title")}")
-//                }
-//                // TODO: Parse JSON
-//            },
-//            { error ->
-//                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
-//                ret = null
-//                // error
-//            })
-//        {
-//            override fun getHeaders(): MutableMap<String, String> {
-//                val headers = HashMap<String, String>()
-//                headers["Authorization"] = "Bearer ${Database.TOKEN}"
-//                return headers
-//            }
-//        }
-//        queue.add(req)
-//        return ret
-//    }
+    fun register(user: User, next: (User?) -> Unit) {
+        var body = JSONObject("{\"username\":\"${user.username}\",\"password\":\"${user.password}\"}")
+        val req = JsonObjectRequest(Request.Method.POST, "$endpoint/user", body,
+            { response ->
+                Log.d("DB", "Returned: ${response.toString()}")
+                Database.TOKEN = response.getString("token")
+                next(User(
+                    response.getInt("id"),
+                    response.getString("username"),
+                    null,
+                    response.getString("role"),
+                    response.getString("token")
+                ))
+            },
+            { error ->
+                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
+                next(null)
+                // error
+            })
+        queue.add(req)
+    }
 
-    fun getPost(): Array<Post>? {
-        var ret: Array<Post>? = null;
+    fun getPost(next: (MutableList<Post>?) -> Unit) {
         val req = object: JsonArrayRequest(Request.Method.GET, "$endpoint/post", null,
         { response ->
             Log.d("DB", "Returned: ${response.toString()}")
@@ -80,6 +74,14 @@ class Database(val context: Context) {
             for (i in 0 until response.length()) {
                 val item = response.getJSONObject(i)
                 val user = item.getJSONObject("User")
+                var longitude = 0.0
+                var latitude = 0.0
+                if (!item.isNull("long")) {
+                    longitude = item.getDouble("long")
+                }
+                if (!item.isNull("lat")) {
+                    latitude = item.getDouble("lat")
+                }
                 l.add(Post(
                     item.getInt("id"),
                     item.getString("title"),
@@ -91,15 +93,16 @@ class Database(val context: Context) {
                         user.getString("role"),
                         null),
                     null,
-                    item.getDouble("long") as Float,
-                    item.getDouble("lat") as Float,
+                    longitude,
+                    latitude,
                     0,
                     0))
             }
+            next(l)
         },
         { error ->
             Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
-            ret = null
+            next(null)
             // error
         })
         {
@@ -110,33 +113,52 @@ class Database(val context: Context) {
             }
         }
         queue.add(req)
-        return ret
     }
 
-    fun getPost(id: Int): Post? {
-        var ret: Post? = null;
-//        val req = object: JsonArrayRequest(Request.Method.GET, "$endpoint/post/${id}", null,
-//            { response ->
-//                Log.d("DB", "Returned: ${response.toString()}")
-//                for (i in 0 until response.length()) {
-//                    val item = response.getJSONObject(i)
-//                    Log.d("DB", "${item.getString("title")}")
-//                }
-//                // TODO: Parse JSON
-//            },
-//            { error ->
-//                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
-//                ret = null
-//                // error
-//            })
-//        {
-//            override fun getHeaders(): MutableMap<String, String> {
-//                val headers = HashMap<String, String>()
-//                headers["Authorization"] = "Bearer ${Database.TOKEN}"
-//                return headers
-//            }
-//        }
-//        queue.add(req)
-        return ret
+    fun getPost(id: Int, next: (Post?) -> Unit) {
+        val req = object: JsonObjectRequest(Request.Method.GET, "$endpoint/post/${id}", null,
+            { response ->
+                Log.d("DB", "Returned: ${response.toString()}")
+                val user = response.getJSONObject("User")
+                var longitude = 0.0
+                var latitude = 0.0
+                if (!response.isNull("long")) {
+                    longitude = response.getDouble("long")
+                }
+                if (!response.isNull("lat")) {
+                    latitude = response.getDouble("lat")
+                }
+                var l = mutableListOf<Comment>()
+                var comments = response.getJSONObject("Comments")
+                var post = Post(
+                    response.getInt("id"),
+                    response.getString("title"),
+                    response.getString("body"),
+                    User(
+                        user.getInt("id"),
+                        user.getString("username"),
+                        null,
+                        user.getString("role"),
+                        null),
+                    null,
+                    longitude,
+                    latitude,
+                    0,
+                    0)
+                next(post)
+            },
+            { error ->
+                Log.d("DB", "Error: ${error.toString()} \n ${error.message}")
+                next(null)
+                // error
+            })
+        {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer ${Database.TOKEN}"
+                return headers
+            }
+        }
+        queue.add(req)
     }
 }

@@ -65,9 +65,9 @@ class SignUpTab : Fragment() {
                 user.role = "Civilian"
             }
 
-            if(usernameString.isEmpty() || passString.isEmpty() || nameString.isEmpty()){
+            if (usernameString.isEmpty() || passString.isEmpty() || nameString.isEmpty()) {
                 Toast.makeText(activity,"Enter Valid Credentials", Toast.LENGTH_LONG).show()
-            }else{
+            } else {
 //                val intent = Intent(activity, SecondActivity::class.java)
 //                intent.putExtra("email",usernameString)
 //                intent.putExtra("pass",passString)
@@ -75,7 +75,7 @@ class SignUpTab : Fragment() {
 //                intent.putExtra("badge",BadgeNumString)
 
                 val database: Database = Database(MainActivity())
-                database.login(user)
+//                database.login(user)
 
                 val intent = Intent(activity, FeedActivity::class.java)
                 startActivity(intent)
