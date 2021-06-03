@@ -38,11 +38,20 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
         var commentList: RecyclerView = findViewById(R.id.commentList)
-//        var incomingPost: Int? = intent.getIntExtra("POST")
+        var postId: Int = intent.getIntExtra("POST", 0)
 
 
         commentList.adapter = MyCommentListRecyclerViewAdapter(COMMENTLIST)
         commentList.layoutManager = LinearLayoutManager(this)
+
+//        db.getPost(postId){
+//            if(it != null){
+//                Log.d("getPOST", "${it.title}")
+//                for (i in 0 until it?.comments!!.size){
+//                    COMMENTLIST.add(it.comments!![i])
+//                }
+//            }
+//        }
 
         postOp = findViewById(R.id.postOp)
 //        postOp.text = "by ".plus(incomingPost?.user?.username)
@@ -53,12 +62,10 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         commentButton = findViewById(R.id.commentButton)
 
         comments = CommentListFragment.newInstance()
-//        COMMENTLIST.add(Comment("John", "I am the greatest of all time"))
-//        COMMENTLIST.add(Comment("xXslay3r69Xx", "Doug's an alright guy"))
-//        COMMENTLIST.add(Comment("Don", "That's definitely good stuff"))
-        COMMENTLIST.add(Comment(0, 0, User(0, "xXslay3r69Xx", null, "role", null), 0, "I am the greatest of all time", 0, 0))
-        COMMENTLIST.add(Comment(0, 0, User(0, "John", null, "role", null), 0, "Doug's an alright guy", 0, 0))
-        COMMENTLIST.add(Comment(0, 0, User(0, "Don", null, "role", null), 0, "That's definitely good stuff", 0, 0))
+
+//        COMMENTLIST.add(Comment(0, 0, User(0, "xXslay3r69Xx", null, "role", null), 0, "I am the greatest of all time", 0, 0))
+//        COMMENTLIST.add(Comment(0, 0, User(0, "John", null, "role", null), 0, "Doug's an alright guy", 0, 0))
+//        COMMENTLIST.add(Comment(0, 0, User(0, "Don", null, "role", null), 0, "That's definitely good stuff", 0, 0))
 
         Log.d("EEE", "${COMMENTLIST.toString()}")
         commentList.adapter?.notifyDataSetChanged()

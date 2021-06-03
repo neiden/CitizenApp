@@ -36,7 +36,7 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
 
-        var db: Database = Database(this)
+        var db = Database(this)
 
         var postList: RecyclerView = findViewById(R.id.postList)
         val bar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -48,7 +48,9 @@ class FeedActivity : AppCompatActivity(), PostDialogListener {
         db.getPost() {
             Log.d("DEBUG", "GET POST: ${it.toString()}")
             if (it != null) {
-                FeedActivity.POSTLIST = it
+                for (i in 0 until it.size){
+                    POSTLIST.add(it[i])
+                }
                 postList.adapter?.notifyDataSetChanged()
                 Log.d("DEBUG", "POSTLIST: ${FeedActivity.POSTLIST.toString()}")
             }
