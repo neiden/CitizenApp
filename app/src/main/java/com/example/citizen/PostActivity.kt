@@ -20,6 +20,7 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
     lateinit var content: TextView
     lateinit var postOp: TextView
     lateinit var commentButton: Button
+    var db: Database = Database.getInstance(this)
 
     companion object {
         var COMMENTLIST: MutableList<Comment> = mutableListOf()
@@ -39,19 +40,22 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         setContentView(R.layout.activity_post)
         var commentList: RecyclerView = findViewById(R.id.commentList)
         var postId: Int = intent.getIntExtra("POST", 0)
+        Log.d("PostID", "$postId")
 
 
         commentList.adapter = MyCommentListRecyclerViewAdapter(COMMENTLIST)
         commentList.layoutManager = LinearLayoutManager(this)
 
-//        db.getPost(postId){
-//            if(it != null){
-//                Log.d("getPOST", "${it.title}")
-//                for (i in 0 until it?.comments!!.size){
-//                    COMMENTLIST.add(it.comments!![i])
-//                }
-//            }
-//        }
+        db.getPost(postId){
+            if(it != null){
+                Log.d("getPOST", "${it.title}")
+                if(it.comments != null){
+                    for (i in 0 until it?.comments!!.size){
+                        COMMENTLIST.add(it.comments!![i])
+                    }
+                    }
+            }
+        }
 
         postOp = findViewById(R.id.postOp)
 //        postOp.text = "by ".plus(incomingPost?.user?.username)
