@@ -49,9 +49,17 @@ comment.get('/:id', authorize, (req, res) => {
 /* Create comment */
 comment.post('/:id', authorize, (req, res) => {
   req.body.PostId = req.params.id;
-  models.Comment.create(req.body)
-    .then((post) => {
-      return res.status(201).json(post);
+  let query = {
+    include: [
+      {
+        model: models.User
+      }
+    ]
+  }
+  models.Comment.create(req.body, query)
+    .then(async (comment) => {
+      let newComment = await models.Comment.findByPk(comment.id, query);
+      return res.status(201).json(newComment);
     })
     .catch((err) => {
       console.error(err);

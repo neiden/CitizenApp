@@ -235,10 +235,17 @@ class Database(val context: Context) {
         val req = object: JsonObjectRequest(Request.Method.POST, "$endpoint/comment/${postId}", body,
             { response ->
                 Log.d("DB", "Returned: ${response.toString()}")
+                var itemUser = response.getJSONObject("User")
                 next(Comment(
                     response.getInt("id"),
                     response.getInt("PostId"),
-                    null,
+                    User(
+                        itemUser.getInt("id"),
+                        itemUser.getString("username"),
+                        null,
+                        itemUser.getString("role"),
+                        null
+                    ),
                     0,
                     response.getString("body"),
                     0,
