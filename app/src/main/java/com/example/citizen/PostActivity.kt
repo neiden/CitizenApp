@@ -32,8 +32,9 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         var dataArray = data.split(",").toTypedArray()
         var op = dataArray[0]
         var content = dataArray[1]
-        db.postComment(Comment(0, 0, null, 0, "$content", 0, 0), 8) {
+        db.postComment(Comment(0, 0, null, 0, "$content", 0, 0), 0) {
             if(it != null) {
+                Log.d("GGG", "${it.body}")
                 COMMENTLIST.add(it)
                 commentList.adapter?.notifyDataSetChanged()
             }
@@ -66,18 +67,13 @@ class PostActivity : AppCompatActivity(), CommentDialogListener {
         }
 
         postOp = findViewById(R.id.postOp)
-//        postOp.text = "by ".plus(incomingPost?.user?.username)
         title = findViewById(R.id.postTitle)
-//        title.text = incomingPost?.title
         content = findViewById(R.id.postContent)
-//        content.text = incomingPost?.body
         commentButton = findViewById(R.id.commentButton)
 
         comments = CommentListFragment.newInstance()
 
-//        COMMENTLIST.add(Comment(0, 0, User(0, "xXslay3r69Xx", null, "role", null), 0, "I am the greatest of all time", 0, 0))
-//        COMMENTLIST.add(Comment(0, 0, User(0, "John", null, "role", null), 0, "Doug's an alright guy", 0, 0))
-//        COMMENTLIST.add(Comment(0, 0, User(0, "Don", null, "role", null), 0, "That's definitely good stuff", 0, 0))
+
 
         Log.d("EEE", "${COMMENTLIST.toString()}")
         commentList.adapter?.notifyDataSetChanged()
